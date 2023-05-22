@@ -13,6 +13,15 @@ namespace ariel{
             // Constructor
             Character(const std::string& characterName, const Point& characterLocation, int characterHP);
 
+            // Getters
+            std::string getName() const;
+            Point getLocation() const;
+            int getCharacterHP() const;
+
+            //Setters 
+            void setLocation(Point newLocation);
+            void setHitPoints(int hitPoint);
+
             // Checks if the character is alive (has more than zero hit points)
             bool isAlive() const;
 
@@ -22,22 +31,8 @@ namespace ariel{
             // Subtracts the specified amount of hit points from the character
             void hit(int amount);
 
-            // Returns the name of the character
-            std::string getName() const;
-
-            // Returns the location of the character
-            Point getLocation() const;
-
-            // Returns the location of the character
-            void setLocation(Point newLocation);
-
-            // Returns the location of the character
-            int getCharacterHP() const;
-
-            void setHitPoints(int hitPoint);
-
             // Prints the character's details (name, hit points, and location)
-            char print() const;
+            virtual void print() const;
     };
 };
 #endif // CHARACTER_HPP

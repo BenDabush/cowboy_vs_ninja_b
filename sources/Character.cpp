@@ -8,23 +8,6 @@ Character::Character(const std::string& name, const Point& location, int charact
     : characterName(name), characterLocation(location), characterHP(characterHP)
 {}
 
-// Checks if the character is alive (has more than zero hit points)
-bool Character::isAlive() const
-{
-    return characterHP > 0;
-}
-
-// Calculates the distance between this character and another character
-double Character::distance(const Character* other) const
-{
-    return characterLocation.distance(other->characterLocation);
-}
-
-// Subtracts the specified amount of hit points from the character
-void Character::hit(int amount) {
-    characterHP -= amount;
-}
-
 // Returns the name of the character
 std::string Character::getName() const {
     return characterName;
@@ -48,13 +31,37 @@ void Character::setHitPoints(int hitPoint){
     this->characterHP = hitPoint;
 }
 
-// Prints the character's details (name, hit points, and location)
-char Character::print() const
+// Checks if the character is alive (has more than zero hit points)
+bool Character::isAlive() const
 {
-    // std::cout << (isAlive() ? "" : "(") << (m_name[0] == 'N' ? "Ninja " : "Morning ") << m_name << ": " << m_hitPoints << " HP, ";
-    // m_location.print();
-    // std::cout << (isAlive() ? "" : ")");
-    return 'a';
+    return characterHP > 0;
+}
+
+// Calculates the distance between this character and another character
+double Character::distance(const Character* other) const
+{
+    return characterLocation.distance(other->characterLocation);
+}
+
+// Subtracts the specified amount of hit points from the character
+void Character::hit(int amount) {
+    if(characterHP == 0){
+        throw std::runtime_error("runtime error: You can't hurt a character that's already dead");
+    }
+    characterHP = (characterHP - amount > 0) ? characterHP - amount : 0;
+}
+
+// Prints the character's details (name, hit points, and location)
+void Character::print() const
+{
+    if(isAlive()){
+        std::cout << characterName << ": " << characterHP << " HP, ";
+        characterLocation.print();
+    }
+    else{
+        std::cout << "(" << characterName << "): ";
+        characterLocation.print();
+    }
 }
 
 
