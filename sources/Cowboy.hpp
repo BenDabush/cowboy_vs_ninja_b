@@ -8,7 +8,7 @@ namespace ariel{
 
     class Cowboy : public Character {
     private:
-        int m_bullets;
+        int bullets;
 
     public:
         // Constructor for Cowboy
@@ -22,6 +22,8 @@ namespace ariel{
 
         // Reloads the gun with six new bullets
         void reload();
+
+        void print() const;
     };
 };
 #endif // COWBOY_HPP
