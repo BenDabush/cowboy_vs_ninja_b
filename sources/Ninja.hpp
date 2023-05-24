@@ -17,8 +17,10 @@ namespace ariel{
         // Deals damage to the enemy if the ninja is alive and the enemy is less than 1 meter away
         void slash(Character* enemy);
 
+        void print() const;
+
     private:
-        int m_speed;
+        int speed;
     };
 };
 

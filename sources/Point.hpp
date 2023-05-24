@@ -25,7 +25,7 @@ namespace ariel{
         void print() const;
 
         // Returns the closest point to the destination point, which is at most the given distance from the source point
-        Point moveTowards(const Point& source, const Point& destination, double distance) const;
+        static Point moveTowards(const Point& source, const Point& destination, double distance);
     };
 };
 #endif // POINT_HPP

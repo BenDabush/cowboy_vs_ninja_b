@@ -9,6 +9,7 @@ namespace ariel{
             std::string characterName;
             Point characterLocation;
             int characterHP;
+            bool inTeam;
         public:
             // Constructor
             Character(const std::string& characterName, const Point& characterLocation, int characterHP);
@@ -17,10 +18,12 @@ namespace ariel{
             std::string getName() const;
             Point getLocation() const;
             int getCharacterHP() const;
+            bool getInTeam() const;
 
             //Setters 
             void setLocation(Point newLocation);
             void setHitPoints(int hitPoint);
+            void setInTeam(bool inTeam);
 
             // Checks if the character is alive (has more than zero hit points)
             bool isAlive() const;

@@ -18,7 +18,7 @@ namespace ariel{
         void shoot(Character* enemy);
 
         // Checks if the cowboy has bullets left
-        bool hasBullets() const;
+        bool hasboolets() const;
 
         // Reloads the gun with six new bullets
         void reload();
