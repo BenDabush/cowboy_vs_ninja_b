@@ -9,6 +9,9 @@ namespace ariel{
         // Constructor
         Team2(Character* leader);
 
+        // Adds a fighter (cowboy or ninja) to the group
+        void add(Character* fighter) override;
+
     };
 };
 #endif // TEAM2_HPP

@@ -8,6 +8,23 @@ Character::Character(const std::string& name, const Point& location, int charact
     : characterName(name), characterLocation(location), characterHP(characterHP), inTeam(false)
 {}
 
+Character::~Character() {}
+
+Character::Character(const Character& other) : characterName(other.characterName),
+      characterLocation(other.characterLocation), characterHP(other.characterHP),
+      inTeam(other.inTeam)
+{}
+
+Character& Character::operator=(const Character& other){
+        if (this != &other) {
+        characterName = other.characterName;
+        characterLocation = other.characterLocation;
+        characterHP = other.characterHP;
+        inTeam = other.inTeam;
+    }
+    return *this;
+}
+
 // Returns the name of the character
 std::string Character::getName() const {
     return characterName;
@@ -65,18 +82,34 @@ void Character::hit(int amount) {
 }
 
 // Prints the character's details (name, hit points, and location)
-void Character::print() const
-{
-    if(isAlive()){
-        std::cout << characterName << ": " << characterHP << " HP, ";
-        characterLocation.print();
-        std::cout << "\n";
+// void Character::print() const
+// {
+//     if(isAlive()){
+//         std::cout << characterName << ": " << characterHP << " HP, ";
+//         characterLocation.print();
+//         std::cout << "\n";
+//     }
+//     else{
+//         std::cout << "(" << characterName << "): ";
+//         characterLocation.print();
+//         std::cout << "\n";
+//     }
+// }
+
+char* Character::print() {
+    const int maxSize = 200;
+    char* massage = new char[maxSize];
+
+    if (isAlive()) {
+        sprintf(massage, "%s: %d HP, location: (%.2f, %.2f)\n", characterName.c_str(), characterHP,
+                characterLocation.getXValue(), characterLocation.getXValue());
+    } else {
+        sprintf(massage, "%s: location: (%.2f, %.2f)\n", characterName.c_str(),
+                characterLocation.getXValue(), characterLocation.getXValue());
     }
-    else{
-        std::cout << "(" << characterName << "): ";
-        characterLocation.print();
-        std::cout << "\n";
-    }
+
+    return massage;
 }
+
 
 

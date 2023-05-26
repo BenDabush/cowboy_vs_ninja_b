@@ -8,27 +8,36 @@
 #include "OldNinja.hpp"
 #include "Cowboy.hpp"
 #include <vector>
-namespace ariel{
+#include <iostream>
+
+namespace ariel {
     class Team {
     private:
         Character* leader;
         std::vector<Character*> fightersArray;
-        int livingTeamMembers;
     
     public:
         // Constructor
         Team(Character* leader);
 
         // Destructor
-        ~Team();
+        virtual ~Team();
 
-        std::vector<Character*> getFihtersArray() const;
+        Team(const Team &) = delete;
+        Team &operator=(const Team &) = delete;
+        Team(Team &&) = delete;
+        Team &operator=(Team &&) = delete;
+
+        std::vector<Character*>& getFightersArray();
+        Character* getLeader();
+
+        void setLeader(Character* newLeader);
 
         // Adds a fighter (cowboy or ninja) to the group
-        void add(Character* fighter);
+        virtual void add(Character* fighter);
 
         // Attacks the enemy group
-        void attack(Team* enemyGroup);
+        virtual void attack(Team* enemyGroup);
 
         // Checks if the group is still alive (number of members left alive)
         int stillAlive() const;
@@ -36,6 +45,6 @@ namespace ariel{
         // Prints the details of all characters in the group
         void print() const;
     };
-};
+}
 
 #endif // TEAM_HPP

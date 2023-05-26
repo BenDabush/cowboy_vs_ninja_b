@@ -35,16 +35,31 @@ void Cowboy::reload() {
 }
 
 // Prints the character's details (name, hit points, and location)
-void Cowboy::print() const
-{
-    if(isAlive()){
-        std::cout << "C " << this->getName() << ": " << this->getCharacterHP() << " HP, ";
-        this->getLocation().print();
-        std::cout << "\n";
+// void Cowboy::print() const
+// {
+//     if(isAlive()){
+//         std::cout << "C " << this->getName() << ": " << this->getCharacterHP() << " HP, ";
+//         this->getLocation().print();
+//         std::cout << "\n";
+//     }
+//     else{
+//         std::cout  << "C " << "(" << this->getName() << "): ";
+//         this->getLocation().print();
+//         std::cout << "\n";
+//     }
+// }
+
+char* Cowboy::print(){
+    const int maxSize = 200;
+    char* massage = new char[maxSize];
+
+    if (isAlive()) {
+        sprintf(massage, "C %s: %d HP, location: (%.2f, %.2f)\n", this->getName().c_str(), this->getCharacterHP(),
+            this->getLocation().getXValue(), this->getLocation().getXValue());
+    } else {
+        sprintf(massage, "C (%s): location: (%.2f, %.2f)\n", this->getName().c_str(),
+            this->getLocation().getXValue(), this->getLocation().getXValue());
     }
-    else{
-        std::cout  << "C " << "(" << this->getName() << "): ";
-        this->getLocation().print();
-        std::cout << "\n";
-    }
+
+    return massage;
 }

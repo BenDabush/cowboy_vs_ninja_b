@@ -3,39 +3,51 @@
 
 #include "Point.hpp"
 #include <string>
-namespace ariel{
+
+namespace ariel {
     class Character {
-        private:
-            std::string characterName;
-            Point characterLocation;
-            int characterHP;
-            bool inTeam;
-        public:
-            // Constructor
-            Character(const std::string& characterName, const Point& characterLocation, int characterHP);
+    private:
+        std::string characterName;
+        Point characterLocation;
+        int characterHP;
+        bool inTeam;
+    public:
+        // Constructor
+        Character(const std::string& characterName, const Point& characterLocation, int characterHP);
 
-            // Getters
-            std::string getName() const;
-            Point getLocation() const;
-            int getCharacterHP() const;
-            bool getInTeam() const;
+        // Destructor
+        virtual ~Character();
 
-            //Setters 
-            void setLocation(Point newLocation);
-            void setHitPoints(int hitPoint);
-            void setInTeam(bool inTeam);
+        // Getters
+        std::string getName() const;
+        Point getLocation() const;
+        int getCharacterHP() const;
+        bool getInTeam() const;
 
-            // Checks if the character is alive (has more than zero hit points)
-            bool isAlive() const;
+        // Setters
+        void setLocation(Point newLocation);
+        void setHitPoints(int hitPoint);
+        void setInTeam(bool inTeam);
 
-            // Calculates the distance between this character and another character
-            double distance(const Character* other) const;
+        // Checks if the character is alive (has more than zero hit points)
+        bool isAlive() const;
 
-            // Subtracts the specified amount of hit points from the character
-            void hit(int amount);
+        // Calculates the distance between this character and another character
+        double distance(const Character* other) const;
 
-            // Prints the character's details (name, hit points, and location)
-            virtual void print() const;
+        // Subtracts the specified amount of hit points from the character
+        void hit(int amount);
+
+        // Prints the character's details (name, hit points, and location)
+        // virtual void print() const;
+
+        virtual char* print();
+
+        Character(const Character &);
+        Character &operator=(const Character &); 
+        Character(Character &&) = delete;
+        Character &operator=(Character &&) = delete; 
     };
-};
+} // namespace ariel
+
 #endif // CHARACTER_HPP

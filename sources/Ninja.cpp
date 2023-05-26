@@ -34,16 +34,31 @@ void Ninja::slash(Character* enemy){
 }
 
 // Prints the character's details (name, hit points, and location)
-void Ninja::print() const
-{
-    if(isAlive()){
-        std::cout << "N " << this->getName() << ": " << this->getCharacterHP() << " HP, ";
-        this->getLocation().print();
-        std::cout << "\n";
+// void Ninja::print() const
+// {
+//     if(isAlive()){
+//         std::cout << "N " << this->getName() << ": " << this->getCharacterHP() << " HP, ";
+//         this->getLocation().print();
+//         std::cout << "\n";
+//     }
+//     else{
+//         std::cout  << "N " << "(" << this->getName() << "): ";
+//         this->getLocation().print();
+//         std::cout << "\n";
+//     }
+// }
+
+char* Ninja::print(){
+    const int maxSize = 200;
+    char* massage = new char[maxSize];
+
+    if (isAlive()) {
+        sprintf(massage, "N %s: %d HP, location: (%.2f, %.2f)\n", this->getName().c_str(), this->getCharacterHP(),
+            this->getLocation().getXValue(), this->getLocation().getXValue());
+    } else {
+        sprintf(massage, "N (%s): location: (%.2f, %.2f)\n", this->getName().c_str(),
+            this->getLocation().getXValue(), this->getLocation().getXValue());
     }
-    else{
-        std::cout  << "N " << "(" << this->getName() << "): ";
-        this->getLocation().print();
-        std::cout << "\n";
-    }
+
+    return massage;
 }

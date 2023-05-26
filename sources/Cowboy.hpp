@@ -23,7 +23,8 @@ namespace ariel{
         // Reloads the gun with six new bullets
         void reload();
 
-        void print() const;
+        // void print() const override;
+        char* print() override;
     };
 };
 #endif // COWBOY_HPP
