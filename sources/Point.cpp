@@ -46,9 +46,9 @@ void Point::print() const {
 Point Point::moveTowards(const Point& source, const Point& destination, double distance) {
     double dist = source.distance(destination);
 
-    if (dist == 0) {
-        throw std::runtime_error("Invalid arguments: source and destination points are the same");
-    }
+    // if (dist == 0) {
+    //     throw std::runtime_error("Invalid arguments: source and destination points are the same");
+    // }
 
     // Distance cannot be negative
     if (distance < 0) {
