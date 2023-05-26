@@ -52,47 +52,53 @@ void Team::add(Character* fighter) {
     }
 }
 
-void Team::attack(Team* enemyGroup){
-    if(enemyGroup == nullptr){
-        throw std::invalid_argument("invalid argument: enemyGroup is null pointer");
+Character* Team::findNearestAliveCharacter(const Point& location) {
+    Character* nearest = nullptr;
+    double minDistance = std::numeric_limits<double>::max();
+    for (Character* fighter : fightersArray) {
+        if (fighter->isAlive()) {
+            double distance = location.distance(fighter->getLocation());
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearest = fighter;
+            }
+        }
     }
-    if(!enemyGroup->stillAlive()){
-        throw std::runtime_error("runtime error: All the member in enemyGroup is dead");
+    return nearest;
+}
+
+void Team::chooseNewLeader() {
+    Character* nearest = findNearestAliveCharacter(leader->getLocation());
+    if (nearest != nullptr) {
+        this->leader = nearest;
+    }
+}
+
+void Team::attack(Team* enemyTeam){
+    if(enemyTeam == nullptr){
+        throw std::invalid_argument("invalid argument: enemyTeam is null pointer");
+    }
+    if(!enemyTeam->stillAlive()){
+        throw std::runtime_error("runtime error: All the member in enemyTeam is dead");
     }
 
-    Character* victim = nullptr;
+    Character* closestEnemy = nullptr;
     double closestDistance = std::numeric_limits<double>::max();
     double distance;
 
     if (this->leader == nullptr || !leader->isAlive()) {
         // Find the living character closest to the dead leader and set it as the new leader
-        Character* newLeader = nullptr;
-        for (Character* fighter : fightersArray) {
-            if (fighter->isAlive()) {
-                distance = leader->distance(fighter);
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    newLeader = fighter;
-                }
-            }
+        chooseNewLeader();
+        if (leader == nullptr) {
+            return;
         }
-        this->leader = newLeader;
     }
-
+    
     for (Character* fighter : fightersArray) {
-        if (victim == nullptr || !victim->isAlive()) {
-            // Find the living enemy character closest to the attacking group's leader as the new victim
-            closestDistance = std::numeric_limits<double>::max();
-            for (Character* enemy : enemyGroup->fightersArray) {
-                if (enemy->isAlive()) {
-                    distance = leader->distance(enemy);
-                    if (distance < closestDistance) {
-                        closestDistance = distance;
-                        victim = enemy;
-                    }
-                }
-            }
-            if (victim == nullptr || !victim->isAlive()) {
+        if (closestEnemy == nullptr || !closestEnemy->isAlive()) {
+            closestEnemy = enemyTeam->findNearestAliveCharacter(this->leader->getLocation());
+
+            if (closestEnemy == nullptr || !closestEnemy->isAlive()) {
                 break;
             }
         }
@@ -101,7 +107,7 @@ void Team::attack(Team* enemyGroup){
             Cowboy* cowboy = dynamic_cast<Cowboy*>(fighter);
             if (cowboy != nullptr){
                 if(cowboy->hasboolets()) {
-                    cowboy->shoot(victim);
+                    cowboy->shoot(closestEnemy);
                 }
                 else{
                     cowboy->reload();
@@ -109,11 +115,11 @@ void Team::attack(Team* enemyGroup){
             } else {
                 Ninja* ninja = dynamic_cast<Ninja*>(fighter);
                 if (ninja != nullptr){
-                    if(ninja->distance(victim) < 1.0) {
-                        ninja->slash(victim);
+                    if(ninja->distance(closestEnemy) < 1.0) {
+                        ninja->slash(closestEnemy);
                     }
                     else {
-                        ninja->move(victim);
+                        ninja->move(closestEnemy);
                     }
                 }
             }

@@ -44,6 +44,9 @@ namespace ariel {
 
         // Prints the details of all characters in the group
         void print() const;
+        
+        Character* findNearestAliveCharacter(const Point& location);
+        void chooseNewLeader();
     };
 }
 
